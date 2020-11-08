@@ -1,125 +1,119 @@
-﻿#nullable enable
-using System;
+﻿using System;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Sms77.Api.Examples;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Hooks;
+using Action = System.Action;
+using Analytics = Sms77.Api.Library.Analytics;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using Voice = Sms77.Api.Library.Voice;
 
 namespace Sms77.Api {
     public class Client : BaseClient {
-        public Client(string apiKey, string sentWith = "CSharp", bool debug = false) : base(apiKey, sentWith, debug) {
-        }
+        public Client(string apiKey, string sentWith = "CSharp", bool debug = false) : base(apiKey, sentWith, debug) { }
 
-        public async Task<Analytics[]> Analytics(AnalyticsParams @params = null) {
-            return JsonConvert.DeserializeObject<Analytics[]>(await Get("analytics", @params));
+        public async Task<Analytics[]> Analytics(AnalyticsParams? args = null) {
+            return await new Resources.Analytics(this).Get(args);
         }
 
         public async Task<double> Balance() {
-            var response = await Get("balance");
-
-            if (Int32.TryParse(response, out int _)) {
-                throw new ApiException("Invalid API-Key or API busy.");
-            }
-
-            return Convert.ToDouble(response);
+            return await new Resources.Balance(this).Get();
         }
 
-        public async Task<dynamic> Contacts(ContactsParams @params) {
-            HttpMethod httpMethod = ContactsAction.read == @params.Action ? HttpMethod.Get : HttpMethod.Post;
-            string method = Util.ToTitleCase(httpMethod.Method);
-            object[] paras = {"contacts", @params};
-            var response = await CallDynamicMethod(method, paras);
+        public async Task<dynamic> Contacts(ContactsParams args) {
+            var resource = new Resources.Contacts(this);
 
-            if (!@params.Json) {
-                return response;
+            switch (args.Action) {
+                case ContactsAction.read:
+                    return await resource.Read(args.Json, args.Id);
+                case ContactsAction.write:
+                    return await resource.Write(new ContactsWriteParams {
+                        Email = args.Email,
+                        Empfaenger = args.Empfaenger,
+                        Id = args.Id,
+                        Json = args.Json,
+                        Nick = args.Nick
+                    });
             }
 
-            return @params.Action switch {
-                ContactsAction.write => WriteContact.FromCsv(response),
-                ContactsAction.del => DelContact.FromCsv(response),
-                _ => JsonConvert.DeserializeObject<Contact[]>(response)
+            if (args.Id == null) {
+                throw new ApiException($"Missing Id for Deletion!");
+            }
+
+            return await resource.Delete((ulong) args.Id, args.Json);
+        }
+
+        public async Task<dynamic> Hooks(Params args) {
+            var resource = new Resources.Hooks(this);
+
+            return args.Action switch {
+                Library.Hooks.Action.subscribe => await resource.Subscribe(new SubscribeParams {
+                    EventType = (EventType) args.EventType,
+                    TargetUrl = args.TargetUrl,
+                    RequestMethod = (RequestMethod) args.RequestMethod,
+                }),
+                Library.Hooks.Action.unsubscribe => await resource.Unsubscribe((int) args.Id),
+                _ => await resource.Read()
             };
         }
 
-        public async Task<dynamic> Hooks(Library.Hooks.Params @params) {
-            var httpMethod = Library.Hooks.Action.read == @params.Action ? HttpMethod.Get : HttpMethod.Post;
-            var method = Util.ToTitleCase(httpMethod.Method);
-            object[] paras = {"hooks", @params};
-            var response = await CallDynamicMethod(method, paras);
-            
-            return @params.Action switch {
-                Library.Hooks.Action.subscribe 
-                    => JsonConvert.DeserializeObject<Library.Hooks.Subscription>(response),
-                Library.Hooks.Action.unsubscribe 
-                    => JsonConvert.DeserializeObject<Library.Hooks.Unsubscription>(response),
-                _ => JsonConvert.DeserializeObject<Library.Hooks.Read>(response)
-            };
+        public async Task<dynamic> Lookup(LookupParams args) {
+            var resource = new Resources.Lookup(this);
+
+            switch (args.Type) {
+                case LookupType.format:
+                    return await resource.Format(args.Number);
+                case LookupType.hlr:
+                    return await resource.Hlr(args.Number);
+                case LookupType.cnam:
+                    return await resource.Cnam(args.Number);
+                default:
+                    if (true == args.Json) {
+                        return await resource.Mnp(args.Number, true);
+                    }
+
+                    return await resource.Mnp(args.Number);
+            }
         }
 
-        public async Task<dynamic> Lookup(LookupParams @params) {
-            var dict = Util.ToDictionary(@params, "Type");
-            dict.Add("type", Enum.GetName(typeof(LookupType), @params.Type));
+        public async Task<dynamic> Pricing(PricingParams? args = null) {
+            var resource = new Resources.Pricing(this);
 
-            var response = await Get("lookup", dict);
-
-            if (LookupType.format == @params.Type) {
-                return JsonConvert.DeserializeObject<FormatLookup>(response);
+            if (null != args && PricingFormat.csv == args.Format) {
+                return await resource.Csv(args.Country);
             }
 
-            if (LookupType.hlr == @params.Type) {
-                return JsonSerializer.Deserialize<HlrLookup>(response);
+            return await resource.Json(args?.Country);
+        }
+
+        public async Task<dynamic> Sms(SmsParams args) {
+            var resource = new Resources.Sms(this);
+
+            if (true == args.Json) {
+                return await resource.Json(args);
             }
 
-            if (LookupType.cnam == @params.Type) {
-                return JsonSerializer.Deserialize<CnamLookup>(response);
-            }
-
-            if (LookupType.mnp == @params.Type && true == @params.Json) {
-                return JsonConvert.DeserializeObject<MnpLookup>(response);
-            }
-
-            return response;
+            return await resource.Text(args);
         }
 
-        public async Task<dynamic> Pricing(PricingParams @params = null) {
-            var pricing = await Get("pricing", @params);
+        public async Task<dynamic> Status(StatusParams args, bool json = false) {
+            var resource = new Resources.Status(this);
 
-            return null == @params || "csv" == @params.Format
-                ? pricing
-                : JsonSerializer.Deserialize<Pricing>(pricing);
+            return await (json ? (dynamic) resource.Json(args.MsgId) : resource.Text(args.MsgId));
         }
 
-        public async Task<dynamic> Sms(SmsParams @params) {
-            var response = await Post("sms", @params);
-
-            return true == @params.Json
-                ? JsonConvert.DeserializeObject<Sms>(response)
-                : response;
+        public async Task<Library.ValidateForVoice> ValidateForVoice(ValidateForVoiceParams args) {
+            return await new Resources.ValidateForVoice(this).Post(args.Number, args.Callback);
         }
 
-        public async Task<dynamic> Status(StatusParams @params, bool json = false) {
-            var response = await Get("status", @params);
+        public async Task<dynamic> Voice(VoiceParams args, bool json = false) {
+            var resource = new Resources.Voice(this);
 
-            return json ? Library.Status.FromString(response) : response;
-        }
-
-        public async Task<dynamic> ValidateForVoice(ValidateForVoiceParams @params) {
-            var validation = await Post("validate_for_voice", @params);
-
-            return JsonSerializer.Deserialize<ValidateForVoice>(validation);
-        }
-
-        public async Task<dynamic> Voice(VoiceParams @params, bool json = false) {
-            var response = await Post("voice", @params);
-
-            return json ? new Voice(response) : response;
-        }
-
-        private async Task<dynamic> CallDynamicMethod(string name, object?[] paras) {
-            var methodInfo = GetType().GetMethod(name, BindingFlags.Instance | BindingFlags.NonPublic);
-            return  await (Task<dynamic>) methodInfo.Invoke(this, paras);
+            return await (json ? (dynamic) resource.Json(args) : resource.Text(args));
         }
     }
 }

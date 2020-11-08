@@ -1,5 +1,5 @@
-#nullable enable
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Sms77.Api.Library;

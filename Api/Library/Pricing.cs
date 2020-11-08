@@ -1,7 +1,13 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Sms77.Api.Library {
+    public enum PricingFormat {
+        csv,
+        json
+    }
+
     public class Country {
         [JsonProperty("countryCode")] public string CountryCode { get; set; }
         [JsonProperty("countryName")] public string CountryName { get; set; }
@@ -25,7 +31,9 @@ namespace Sms77.Api.Library {
     }
 
     public class PricingParams {
-        [JsonProperty("format")] public string Format { get; set; }
-        [JsonProperty("country")] public string Country { get; set; }
+        [JsonProperty("format"), JsonConverter(typeof(StringEnumConverter))]
+        public PricingFormat? Format { get; set; } = PricingFormat.json;
+
+        [JsonProperty("country")] public string? Country { get; set; }
     }
 }

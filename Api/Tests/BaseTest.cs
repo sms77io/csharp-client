@@ -1,6 +1,4 @@
-using System;
 using NUnit.Framework;
-using Sms77.Api.Library;
 
 namespace Sms77.Api.Tests {
     [SetUpFixture]
@@ -9,11 +7,13 @@ namespace Sms77.Api.Tests {
 
         [OneTimeSetUp]
         public void Setup() {
-            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("SMS77_DUMMY_API_KEY"))) {
-                throw new MissingEnvironmentVariableException("Please set environment variable SMS77_DUMMY_API_KEY");
+            if (string.IsNullOrWhiteSpace(TestHelper.ApiKey)) {
+                throw new MissingEnvironmentVariableException(
+                    $@"Please set environment variable 
+                            {TestHelper.ApiDummyKeyEnvProperty} or {TestHelper.ApiKeyEnvProperty}");
             }
 
-            Client = new Client(TestHelper.ApiKey, "CSharp", true);
+            Client = new Client(TestHelper.ApiKey, "CSharp-Test", false);
         }
     }
 }

@@ -19,6 +19,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>sms text2speech mnp hlr cnam</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>

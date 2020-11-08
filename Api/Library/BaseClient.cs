@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using Newtonsoft.Json.Linq;
 
 namespace Sms77.Api.Library {
-    public abstract class BaseClient {
+    public class BaseClient {
         private readonly Dictionary<string, string> _commonPayload = new Dictionary<string, string>();
         protected readonly string ApiKey;
         protected readonly HttpClient Client;
@@ -24,38 +26,61 @@ namespace Sms77.Api.Library {
             _commonPayload.Add("sentWith", SentWith);
         }
 
-        protected async Task<dynamic> Get(string endpoint, object @params = null) {
-            var query = HttpUtility.ParseQueryString("");
-
-            if (null != @params) {
-                foreach (var item in Util.ToJObject(@params)) {
-                    query.Add(item.Key, Util.ToString(item.Value));
-                }
+        public void ThrowOnInteger(string response) {
+            if (int.TryParse(response, out _)) {
+                throw new ApiException("Invalid API-Key or API busy.");
             }
+        }
+
+        public async Task<dynamic> Get(string endpoint, object @params = null, bool throwOnInt = false) {
+            var query = BuildQueryString(@params);
+
+            var response = await Client.GetStringAsync($"{endpoint}?{query}");
+
+            if (throwOnInt) {
+                ThrowOnInteger(response);
+            }
+
+            return response;
+        }
+
+        private NameValueCollection BuildQueryString(object args) {
+            var query = HttpUtility.ParseQueryString("");
 
             foreach (var (key, value) in _commonPayload) {
                 query.Add(key, value);
             }
 
-            return await Client.GetStringAsync($"{endpoint}?{query}");
-        }
-
-        protected async Task<dynamic> Post(string endpoint, object @params = null) {
-            var body = new List<KeyValuePair<string, string>>();
-
-            foreach (var (key, value) in _commonPayload) {
-                body.Add(new KeyValuePair<string, string>(key, value));
-            }
-
-            if (null != @params) {
-                foreach (var item in Util.ToJObject(@params)) {
-                    body.Add(new KeyValuePair<string, string>(item.Key, Util.ToString(item.Value)));
+            if (null != args) {
+                foreach (var (key, value) in Util.ToObject<JObject>(Util.ToJson(args))) {
+                    query.Add(key, Util.ToString(value));
                 }
             }
 
+            return query;
+        }
+
+        public async Task<dynamic> Post(string endpoint, object @params = null, bool throwOnInt = false) {
+            var query = BuildQueryString(@params);
+            var body = new List<KeyValuePair<string, string>>();
+            var enu = query.GetEnumerator();
+            while (enu.MoveNext()) {
+                var key = (string) enu.Current;
+
+                body.Add(new KeyValuePair<string, string>(key, query[key]));
+            }
+
             var response = await Client.PostAsync(endpoint, new FormUrlEncodedContent(body));
+
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsStringAsync();
+
+            var str = await response.Content.ReadAsStringAsync();
+
+            if (throwOnInt) {
+                ThrowOnInteger(str);
+            }
+
+            return str;
         }
     }
 }

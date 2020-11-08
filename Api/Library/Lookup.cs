@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Sms77.Api.Library {
     public enum LookupType {
@@ -18,7 +19,10 @@ namespace Sms77.Api.Library {
     public class FormatLookup {
         [JsonProperty("success")] public bool Success { get; set; }
         [JsonProperty("international")] public string International { get; set; }
-        [JsonProperty("international_formatted")] public string InternationalFormatted { get; set; }
+
+        [JsonProperty("international_formatted")]
+        public string InternationalFormatted { get; set; }
+
         [JsonProperty("national")] public string National { get; set; }
         [JsonProperty("country_iso")] public string CountryIso { get; set; }
         [JsonProperty("country_name")] public string CountryName { get; set; }
@@ -33,10 +37,42 @@ namespace Sms77.Api.Library {
         [JsonProperty("json")] public bool? Json { get; set; }
     }
 
+    public class LookupFormatParams {
+        [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
+        public const LookupType Type = LookupType.format;
+
+        [JsonProperty("number")] public string Number { get; set; }
+    }
+
+    public class LookupCnamParams {
+        [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
+        public const LookupType Type = LookupType.cnam;
+
+        [JsonProperty("number")] public string Number { get; set; }
+    }
+
+    public class LookupHlrParams {
+        [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
+        public const LookupType Type = LookupType.hlr;
+
+        [JsonProperty("number")] public string Number { get; set; }
+    }
+
+    public class LookupMnpParams {
+        [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
+        public const LookupType Type = LookupType.mnp;
+
+        [JsonProperty("number")] public string Number { get; set; }
+        [JsonProperty("json")] public bool? Json { get; set; }
+    }
+
     public class Mnp {
         [JsonProperty("country")] public string Country { get; set; }
         [JsonProperty("number")] public string Number { get; set; }
-        [JsonProperty("international_formatted")] public string InternationalFormatted { get; set; }
+
+        [JsonProperty("international_formatted")]
+        public string InternationalFormatted { get; set; }
+
         [JsonProperty("national_format")] public string NationalFormat { get; set; }
         [JsonProperty("network")] public string Network { get; set; }
         [JsonProperty("mccmnc")] public string MccMnc { get; set; }
@@ -54,10 +90,19 @@ namespace Sms77.Api.Library {
         [JsonProperty("status")] public bool Status { get; set; }
         [JsonProperty("status_message")] public string StatusMessage { get; set; }
         [JsonProperty("lookup_outcome")] public bool LookupOutcome { get; set; }
-        [JsonProperty("lookup_outcome_message")] public string LookupOutcomeMessage { get; set; }
-        [JsonProperty("international_format_number")] public string InternationalFormatNumber { get; set; }
-        [JsonProperty("international_formatted")] public string InternationalFormatted { get; set; }
-        [JsonProperty("national_format_number")] public string NationalFormatNumber { get; set; }
+
+        [JsonProperty("lookup_outcome_message")]
+        public string LookupOutcomeMessage { get; set; }
+
+        [JsonProperty("international_format_number")]
+        public string InternationalFormatNumber { get; set; }
+
+        [JsonProperty("international_formatted")]
+        public string InternationalFormatted { get; set; }
+
+        [JsonProperty("national_format_number")]
+        public string NationalFormatNumber { get; set; }
+
         [JsonProperty("country_code")] public string CountryCode { get; set; }
         [JsonProperty("country_name")] public string CountryName { get; set; }
         [JsonProperty("country_prefix")] public string CountryPrefix { get; set; }

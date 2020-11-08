@@ -6,7 +6,7 @@ using Sms77.Api.Library;
 namespace Sms77.Api.Examples {
     class ValidateForVoice : BaseExample {
         static async Task Retrieve() {
-            var paras = new ValidateForVoiceParams {Number = TestHelper.PhoneNumber, Callback = "doma.in/cb.php"};
+            var paras = new ValidateForVoiceParams {Callback = "doma.in/cb.php", Number = TestHelper.PhoneNumber};
 
             Console.WriteLine(await Client.ValidateForVoice(paras));
         }

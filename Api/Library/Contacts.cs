@@ -53,11 +53,38 @@ namespace Sms77.Api.Library {
     }
 
     public class ContactsParams {
-        [JsonProperty("action"), JsonConverter(typeof(StringEnumConverter))] public ContactsAction Action { get; set; }
+        [JsonProperty("action"), JsonConverter(typeof(StringEnumConverter))]
+        public ContactsAction Action { get; set; }
+
         [JsonProperty("email")] public string Email { get; set; }
         [JsonProperty("empfaenger")] public string Empfaenger { get; set; }
         [JsonProperty("id")] public ulong? Id { get; set; }
         [JsonProperty("json")] public bool Json { get; set; }
         [JsonProperty("nick")] public string Nick { get; set; }
+    }
+
+    public class ContactsReadParams {
+        [JsonProperty("action"), JsonConverter(typeof(StringEnumConverter))]
+        public const ContactsAction Action = ContactsAction.read;
+        [JsonProperty("id")] public ulong? Id { get; set; }
+        [JsonProperty("json")] public bool Json { get; set; }
+    }
+
+    public class ContactsWriteParams {
+        [JsonProperty("action"), JsonConverter(typeof(StringEnumConverter))]
+        public const ContactsAction Action = ContactsAction.write;
+
+        [JsonProperty("email")] public string Email { get; set; }
+        [JsonProperty("empfaenger")] public string Empfaenger { get; set; }
+        [JsonProperty("id")] public ulong? Id { get; set; }
+        [JsonProperty("json")] public bool Json { get; set; }
+        [JsonProperty("nick")] public string Nick { get; set; }
+    }
+
+    public class ContactsDeleteParams {
+        [JsonProperty("action"), JsonConverter(typeof(StringEnumConverter))]
+        public const ContactsAction Action = ContactsAction.del;
+        [JsonProperty("id")] public ulong Id { get; set; }
+        [JsonProperty("json")] public bool Json { get; set; }
     }
 }
