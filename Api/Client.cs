@@ -7,7 +7,7 @@ namespace Sms77.Api {
     public class Client : BaseClient {
         public Client(string apiKey, string sentWith = "CSharp", bool debug = false) : base(apiKey, sentWith, debug) { }
 
-        public async Task<Analytics[]> Analytics(AnalyticsParams? args = null) {
+        public async Task<Analytics[]> Analytics(AnalyticsParams? args) {
             return await new Resources.Analytics(this).Get(args);
         }
 

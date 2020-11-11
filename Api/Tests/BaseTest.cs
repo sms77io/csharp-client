@@ -13,7 +13,7 @@ namespace Sms77.Api.Tests {
                             {TestHelper.ApiDummyKeyEnvProperty} or {TestHelper.ApiKeyEnvProperty}");
             }
 
-            Client = new Client(TestHelper.ApiKey, "CSharp-Test", false);
+            Client = new Client(TestHelper.ApiKey, "CSharp-Test", true);
         }
     }
 }

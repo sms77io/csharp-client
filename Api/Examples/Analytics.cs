@@ -5,7 +5,7 @@ using Sms77.Api.Library;
 namespace Sms77.Api.Examples {
     class Analytics : BaseExample {
         static async Task Retrieve() {
-            Console.WriteLine(await Client.Analytics());
+            Console.WriteLine(await Client.Analytics(null));
         }
 
         static async Task RetrieveByNonExistingLabel() {
@@ -17,11 +17,11 @@ namespace Sms77.Api.Examples {
         }
 
         static async Task RetrieveGroupedBy() {
-            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = "label"}));
+            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.label}));
 
-            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = "subaccount"}));
+            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.subaccount}));
 
-            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = "country"}));
+            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.country}));
         }
 
         static async Task RetrieveByTimeFrame() {

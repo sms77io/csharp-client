@@ -71,5 +71,9 @@ namespace Sms77.Api.Library {
         public static IEnumerable<T> GetEnumValues<T>() {
             return Enum.GetValues(typeof(T)).Cast<T>();
         }
+
+        public static bool IsValidDateTime(string date, string format) {
+            return DateTime.TryParseExact(date, format, null, DateTimeStyles.None, out _);
+        }
     }
 }
