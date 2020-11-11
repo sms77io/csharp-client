@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Sms77.Api.Library;
 
 namespace Sms77.Api.Resources {

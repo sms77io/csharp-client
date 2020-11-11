@@ -1,16 +1,7 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Net.Http;
-using System.Reflection;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Sms77.Api.Examples;
+﻿using System.Threading.Tasks;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Hooks;
-using Action = System.Action;
 using Analytics = Sms77.Api.Library.Analytics;
-using JsonSerializer = System.Text.Json.JsonSerializer;
-using Voice = Sms77.Api.Library.Voice;
 
 namespace Sms77.Api {
     public class Client : BaseClient {
