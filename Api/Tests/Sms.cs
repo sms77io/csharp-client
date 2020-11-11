@@ -65,7 +65,7 @@ namespace Sms77.Api.Tests {
         }
 
         private void AssertJson(Library.Sms sms) {
-            bool debug = "true" == sms.Debug;
+            var debug = "true" == sms.Debug;
             double totalPrice = 0;
 
             foreach (var message in sms.Messages) {

@@ -14,7 +14,7 @@ namespace Sms77.Api.Library {
         public static Contact FromCsv(string csv) {
             var values = csv.Split(";", StringSplitOptions.RemoveEmptyEntries);
 
-            for (int i = 0; i < values.Length; i++) {
+            for (var i = 0; i < values.Length; i++) {
                 values[i] = values[i].Trim();
 
                 string first = values[i].First().ToString();
