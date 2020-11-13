@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Lookup;
@@ -5,7 +6,7 @@ using Sms77.Api.Library.Lookup;
 namespace Sms77.Api.Resources {
     public class Lookup : Resource {
         private async Task<T> Request<T>(object args) {
-            return await PostEndpoint<T>(Endpoint.Lookup, args);
+            return await BaseClient.Fetch<T>(HttpMethod.Post, Endpoint.Lookup, args);
         }
 
         public async Task<CnamLookup> Cnam(string number) {

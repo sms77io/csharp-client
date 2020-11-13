@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Status;
@@ -5,7 +6,7 @@ using Sms77.Api.Library.Status;
 namespace Sms77.Api.Resources {
     public class Status : Resource {
         private async Task<string> Request(ulong id) {
-            return await GetEndpoint<string>(Endpoint.Status, new StatusParams(id));
+            return await BaseClient.Fetch<string>(HttpMethod.Get, Endpoint.Status, new StatusParams(id));
         }
 
         public async Task<string> Text(ulong id) {

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Pricing;
@@ -11,7 +12,7 @@ namespace Sms77.Api.Resources {
                 args.Format = (PricingFormat) pricingFormat;
             }
 
-            return await GetEndpoint<T>(Endpoint.Pricing, args);
+            return await BaseClient.Fetch<T>(HttpMethod.Get, Endpoint.Pricing, args);
         }
 
         public async Task<string> Csv(string? country) {

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using Sms77.Api.Library;
 using Sms77.Api.Library.ValidateForVoice;
@@ -6,7 +7,7 @@ using Model = Sms77.Api.Library.ValidateForVoice.ValidateForVoice;
 namespace Sms77.Api.Resources {
     public class ValidateForVoice : Resource {
         public async Task<Model> Post(string number, string? callback = null) {
-            return await PostEndpoint<Model>(
+            return await BaseClient.Fetch<Model>(HttpMethod.Post,
                 Endpoint.ValidateForVoice,
                 new ValidateForVoiceParams(number) {Callback = callback});
         }

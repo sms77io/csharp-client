@@ -9,23 +9,22 @@ namespace Sms77.Api.Library {
             : base(innerHandler) {
         }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-            CancellationToken cancellationToken) {
-            Console.WriteLine("Request: " + request);
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage req, CancellationToken token) {
+            Console.WriteLine($"Request: {req}");
 
-            if (null != request.Content) {
-                Console.WriteLine(await request.Content.ReadAsStringAsync());
+            if (null != req.Content) {
+                Console.WriteLine(await req.Content.ReadAsStringAsync());
             }
 
-            HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
+            var res = await base.SendAsync(req, token);
 
-            Console.WriteLine("Response: " + response);
+            Console.WriteLine($"Response: {res}");
 
-            if (null != response.Content) {
-                Console.WriteLine(await response.Content.ReadAsStringAsync());
+            if (null != res.Content) {
+                Console.WriteLine(await res.Content.ReadAsStringAsync());
             }
 
-            return response;
+            return res;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Sms;
@@ -5,7 +6,7 @@ using Sms77.Api.Library.Sms;
 namespace Sms77.Api.Resources {
     public class Sms : Resource {
         private async Task<T> Request<T>(SmsParams smsParams) {
-            return await PostEndpoint<T>(
+            return await BaseClient.Fetch<T>(HttpMethod.Post,
                 Endpoint.Sms, smsParams, !(true != smsParams.Details && true != smsParams.Json));
         }
 

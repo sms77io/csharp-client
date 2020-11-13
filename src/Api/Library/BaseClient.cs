@@ -8,60 +8,35 @@ using Newtonsoft.Json.Linq;
 
 namespace Sms77.Api.Library {
     public class BaseClient {
-        private readonly Dictionary<string, string> _commonPayload = new Dictionary<string, string>();
-        protected readonly string ApiKey;
-        protected readonly HttpClient Client;
-        protected readonly bool Debug;
-        protected readonly string SentWith;
-
+        private readonly HttpClient _client;
+        public string ApiKey { get; }
+        public bool Debug { get; }
+        public string SentWith { get; }
+        
         public BaseClient(string apiKey, string sentWith = "CSharp", bool debug = false) {
             ApiKey = apiKey;
             SentWith = sentWith;
             Debug = debug;
 
-            Client = Debug ? new HttpClient(new LoggingHandler(new HttpClientHandler())) : new HttpClient();
-            Client.BaseAddress = new Uri("https://gateway.sms77.io/api/");
-
-            _commonPayload.Add("p", ApiKey);
-            _commonPayload.Add("sentWith", SentWith);
+            _client = Debug ? new HttpClient(new LoggingHandler(new HttpClientHandler())) : new HttpClient();
+            _client.BaseAddress = new Uri("https://gateway.sms77.io/api/");
+            _client.DefaultRequestHeaders.Add("Authorization", $"Basic {ApiKey}");
+            _client.DefaultRequestHeaders.Add("sentWith", SentWith);
         }
 
-        public void ThrowOnInteger(string response) {
-            if (int.TryParse(response, out _)) {
-                throw new ApiException("Invalid API-Key or API busy.");
-            }
-        }
-
-        public async Task<dynamic> Get(string endpoint, object @params = null, bool throwOnInt = false) {
-            var query = BuildQueryString(@params);
-
-            var response = await Client.GetStringAsync($"{endpoint}?{query}");
-
-            if (throwOnInt) {
-                ThrowOnInteger(response);
-            }
-
-            return response;
-        }
-
-        private NameValueCollection BuildQueryString(object args) {
+        private NameValueCollection BuildPayload(object? args) {
             var query = HttpUtility.ParseQueryString("");
-
-            foreach (var (key, value) in _commonPayload) {
-                query.Add(key, value);
-            }
-
+            
             if (null != args) {
-                foreach (var (key, value) in Util.ToObject<JObject>(Util.ToJson(args))) {
-                    query.Add(key, Util.ToString(value));
+                foreach (var (k, v) in Util.ToObject<JObject>(Util.ToJson(args))) {
+                    query.Add(k, Util.ToString(v));
                 }
             }
 
             return query;
         }
 
-        public async Task<dynamic> Post(string endpoint, object @params = null, bool throwOnInt = false) {
-            var query = BuildQueryString(@params);
+        private async Task<string> Post(string endpoint, NameValueCollection query) {
             var body = new List<KeyValuePair<string, string>>();
             var enu = query.GetEnumerator();
             while (enu.MoveNext()) {
@@ -70,17 +45,25 @@ namespace Sms77.Api.Library {
                 body.Add(new KeyValuePair<string, string>(key, query[key]));
             }
 
-            var response = await Client.PostAsync(endpoint, new FormUrlEncodedContent(body));
+            var res = await _client.PostAsync(endpoint, new FormUrlEncodedContent(body));
 
-            response.EnsureSuccessStatusCode();
+            res.EnsureSuccessStatusCode();
 
-            var str = await response.Content.ReadAsStringAsync();
+            return await res.Content.ReadAsStringAsync();
+        }
+        
+        public async Task<T> Fetch<T>(HttpMethod method, string endpoint, object? args, bool throwOnInt = true) {
+            var payload = BuildPayload(args);
 
-            if (throwOnInt) {
-                ThrowOnInteger(str);
+            dynamic res = HttpMethod.Post == method
+                ? await Post(endpoint, payload)
+                : await _client.GetStringAsync($"{endpoint}?{payload}");
+            
+            if (throwOnInt && int.TryParse((string) res, out _)) {
+                throw new ApiException("Invalid API-Key or API busy.");
             }
 
-            return str;
+            return typeof(T) == typeof(string) ? res : Util.ToObject<T>(res);
         }
     }
 }
