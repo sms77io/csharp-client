@@ -2,13 +2,14 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using Sms77.Api.Library;
+using Sms77.Api.Library.ValidateForVoice;
 
 namespace Sms77.Api.Tests {
     [TestFixture]
     public class ValidateForVoice {
         [Test]
         public async Task Retrieve() {
-            Library.ValidateForVoice validation =
+            Library.ValidateForVoice.ValidateForVoice validation =
                 await BaseTest.Client.ValidateForVoice(new ValidateForVoiceParams {Number = TestHelper.PhoneNumber});
 
             Assert.That(validation.Code, TestHelper.IsDummyKey ? (IResolveConstraint) Is.Null : Is.Not.Empty);

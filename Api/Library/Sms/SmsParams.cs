@@ -1,28 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Sms77.Api.Library {
-    public class Message {
-        [JsonProperty("id")] public ulong? Id { get; set; }
-        [JsonProperty("sender")] public string Sender { get; set; }
-        [JsonProperty("recipient")] public string Recipient { get; set; }
-        [JsonProperty("text")] public string Text { get; set; }
-        [JsonProperty("encoding")] public string Encoding { get; set; }
-        [JsonProperty("parts")] public ushort Parts { get; set; }
-        [JsonProperty("price")] public double Price { get; set; }
-        [JsonProperty("success")] public bool Success { get; set; }
-        [JsonProperty("error")] public string Error { get; set; }
-        [JsonProperty("error_text")] public string ErrorText { get; set; }
-    }
-
-    public class Sms {
-        [JsonProperty("success")] public string Success { get; set; }
-        [JsonProperty("total_price")] public double TotalPrice { get; set; }
-        [JsonProperty("balance")] public double Balance { get; set; }
-        [JsonProperty("debug")] public string Debug { get; set; }
-        [JsonProperty("sms_type")] public string SmsType { get; set; }
-        [JsonProperty("messages")] public Message[] Messages { get; set; }
-    }
-
+namespace Sms77.Api.Library.Sms {
     public class SmsParams {
         [JsonProperty("to")] public string To { get; set; }
         [JsonProperty("text")] public string Text { get; set; }

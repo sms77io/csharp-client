@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Status;
 
 namespace Sms77.Api.Examples {
     class Status : BaseExample {

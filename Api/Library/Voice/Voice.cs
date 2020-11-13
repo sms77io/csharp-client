@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Sms77.Api.Library {
+namespace Sms77.Api.Library.Voice {
     public class Voice {
         public Voice(string response = null) {
             if (null != response) {
@@ -16,12 +16,5 @@ namespace Sms77.Api.Library {
         [JsonProperty("code")] public ushort Code { get; set; }
         [JsonProperty("id")] public uint Id { get; set; }
         [JsonProperty("cost")] public double Cost { get; set; }
-    }
-
-    public class VoiceParams {
-        [JsonProperty("text")] public string Text { get; set; }
-        [JsonProperty("to")] public string To { get; set; }
-        [JsonProperty("xml")] public bool Xml { get; set; }
-        [JsonProperty("from")] public string From { get; set; }
     }
 }

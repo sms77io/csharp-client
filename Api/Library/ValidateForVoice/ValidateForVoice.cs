@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Sms77.Api.Library {
+namespace Sms77.Api.Library.ValidateForVoice {
     public class ValidateForVoice {
         [JsonProperty("code")] public string? Code { get; set; }
         [JsonProperty("error")] public string? Error { get; set; }
@@ -20,10 +20,5 @@ namespace Sms77.Api.Library {
             Sender: {Sender}
             ";
         }
-    }
-    
-    public class ValidateForVoiceParams {
-        [JsonProperty("callback")] public string? Callback { get; set; }
-        [JsonProperty("number")] public string Number { get; set; }
     }
 }

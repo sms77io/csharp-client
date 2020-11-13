@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Voice;
 
 namespace Sms77.Api.Resources {
     public class Voice : Resource {
@@ -11,10 +12,10 @@ namespace Sms77.Api.Resources {
             return await Post(args);
         }
 
-        public async Task<Library.Voice> Json(VoiceParams args) {
+        public async Task<Library.Voice.Voice> Json(VoiceParams args) {
             var res = await Post(args);
 
-            return new Library.Voice(res);
+            return new Library.Voice.Voice(res);
         }
         
         public Voice(BaseClient baseClient) : base(baseClient) { }

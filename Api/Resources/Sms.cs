@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Sms;
 
 namespace Sms77.Api.Resources {
     public class Sms : Resource {
@@ -12,8 +13,8 @@ namespace Sms77.Api.Resources {
             return await Request<string>(smsParams);
         }
 
-        public async Task<Library.Sms> Json(SmsParams smsParams) {
-            return await Request<Library.Sms>(smsParams);
+        public async Task<Library.Sms.Sms> Json(SmsParams smsParams) {
+            return await Request<Library.Sms.Sms>(smsParams);
         }
 
         public Sms(BaseClient baseClient) : base(baseClient) { }

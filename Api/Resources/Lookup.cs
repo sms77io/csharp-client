@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Lookup;
 
 namespace Sms77.Api.Resources {
     public class Lookup : Resource {

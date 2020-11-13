@@ -1,5 +1,6 @@
 using System;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Sms;
 
 namespace Sms77.Api.Examples {
     class Sms : BaseExample {

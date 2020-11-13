@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Sms77.Api.Library;
-using Model = Sms77.Api.Library.ValidateForVoice;
+using Sms77.Api.Library.ValidateForVoice;
+using Model = Sms77.Api.Library.ValidateForVoice.ValidateForVoice;
 
 namespace Sms77.Api.Resources {
     public class ValidateForVoice : Resource {

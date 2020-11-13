@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Sms;
 
 namespace Sms77.Api.Tests {
     [TestFixture]
@@ -64,7 +65,7 @@ namespace Sms77.Api.Tests {
             AssertJson(await BaseTest.Client.Sms(paras));
         }
 
-        private void AssertJson(Library.Sms sms) {
+        private void AssertJson(Library.Sms.Sms sms) {
             var debug = "true" == sms.Debug;
             double totalPrice = 0;
 

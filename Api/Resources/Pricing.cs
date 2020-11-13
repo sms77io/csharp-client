@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Pricing;
 
 namespace Sms77.Api.Resources {
     public class Pricing : Resource {
@@ -17,8 +18,8 @@ namespace Sms77.Api.Resources {
             return await Get<string>(country, PricingFormat.csv);
         }
 
-        public async Task<Library.Pricing> Json(string? country) {
-            return await Get<Library.Pricing>(country, null);
+        public async Task<Library.Pricing.Pricing> Json(string? country) {
+            return await Get<Library.Pricing.Pricing>(country, null);
         }
 
         public Pricing(BaseClient baseClient) : base(baseClient) { }

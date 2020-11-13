@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Contacts;
 
 namespace Sms77.Api.Examples {
     class Contacts : BaseExample {

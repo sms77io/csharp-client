@@ -1,7 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Analytics;
+using Sms77.Api.Library.Contacts;
 using Sms77.Api.Library.Hooks;
-using Analytics = Sms77.Api.Library.Analytics;
+using Sms77.Api.Library.Lookup;
+using Sms77.Api.Library.Pricing;
+using Sms77.Api.Library.Sms;
+using Sms77.Api.Library.Status;
+using Sms77.Api.Library.ValidateForVoice;
+using Sms77.Api.Library.Voice;
+using Analytics = Sms77.Api.Library.Analytics.Analytics;
 
 namespace Sms77.Api {
     public class Client : BaseClient {
@@ -97,7 +105,7 @@ namespace Sms77.Api {
             return await (json ? (dynamic) resource.Json(args.MsgId) : resource.Text(args.MsgId));
         }
 
-        public async Task<Library.ValidateForVoice> ValidateForVoice(ValidateForVoiceParams args) {
+        public async Task<ValidateForVoice> ValidateForVoice(ValidateForVoiceParams args) {
             return await new Resources.ValidateForVoice(this).Post(args.Number, args.Callback);
         }
 

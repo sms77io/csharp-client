@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Sms77.Api.Library;
+using Sms77.Api.Library.Contacts;
 
 namespace Sms77.Api.Tests {
     [TestFixture]
