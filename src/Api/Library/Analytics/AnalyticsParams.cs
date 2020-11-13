@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Sms77.Api.Library.Analytics {
     public class AnalyticsParams {
@@ -19,7 +18,7 @@ namespace Sms77.Api.Library.Analytics {
             }
         }
 
-        [JsonProperty("group_by"), JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("group_by")]
         public GroupBy? GroupBy { get; set; }
 
         [JsonProperty("label")] public string? Label { get; set; }

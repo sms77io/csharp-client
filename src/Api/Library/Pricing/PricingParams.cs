@@ -1,9 +1,8 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Sms77.Api.Library.Pricing {
     public class PricingParams {
-        [JsonProperty("format"), JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("format")]
         public PricingFormat? Format { get; set; } = PricingFormat.Json;
 
         [JsonProperty("country")] public string? Country { get; set; }

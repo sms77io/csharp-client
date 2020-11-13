@@ -1,9 +1,8 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Sms77.Api.Library.Contacts {
     public class ContactsParams {
-        [JsonProperty("action"), JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty("action")]
         public Action Action { get; set; }
 
         [JsonProperty("email")] public string? Email { get; set; }
