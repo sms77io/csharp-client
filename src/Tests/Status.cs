@@ -7,7 +7,7 @@ using Sms77.Api.Library.Status;
 namespace Sms77.Tests {
     [TestFixture]
     public class Status {
-        private readonly StatusParams _statusParams = new StatusParams {MsgId = 77131047375};
+        private readonly StatusParams _statusParams = new StatusParams(77131047375);
 
         private void AssertStatus(Api.Library.Status.Status status) {
             var codes = Enum.GetNames(typeof(StatusCode));

@@ -12,9 +12,7 @@ namespace Sms77.Tests {
 
         [Test]
         public async Task Single() {
-            Assert.That(await BaseTest.Client.Sms(new SmsParams {
-                    Text = "HI2U!",
-                    To = TestHelper.MyPhoneNumber,
+            Assert.That(await BaseTest.Client.Sms(new SmsParams(TestHelper.MyPhoneNumber, "HI2U!") {
                     Flash = true,
                     From = TestHelper.PhoneNumber,
                     Delay = $"{DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 60}",
@@ -29,16 +27,17 @@ namespace Sms77.Tests {
 
         [Test]
         public async Task SingleDetailed() {
-            SmsParams paras = new SmsParams
-                {Text = "HI2U!", To = TestHelper.MyPhoneNumber, From = TestHelper.PhoneNumber, Details = true};
+            SmsParams paras = new SmsParams(TestHelper.MyPhoneNumber, "HI2U!")
+                {From = TestHelper.PhoneNumber, Details = true};
 
             AssertDetailed(Util.SplitByLine(await BaseTest.Client.Sms(paras)), paras.Text);
         }
 
         [Test]
         public async Task SingleReturnMsgId() {
-            string[] lines = Util.SplitByLine(await BaseTest.Client.Sms(new SmsParams
-                {Text = "HI2U!", To = TestHelper.MyPhoneNumber, From = TestHelper.PhoneNumber, ReturnMsgId = true}));
+            string[] lines = Util.SplitByLine(
+                await BaseTest.Client.Sms(new SmsParams(TestHelper.MyPhoneNumber, "HI2U!")
+                {From = TestHelper.PhoneNumber, ReturnMsgId = true}));
 
             Assert.That(lines[0], Is.EqualTo(_successCode));
             Assert.That(lines[1], Is.EqualTo("1234567890"));
@@ -46,10 +45,8 @@ namespace Sms77.Tests {
 
         [Test]
         public async Task SingleDetailedWithMsgId() {
-            SmsParams paras = new SmsParams {
-                Text = "HI2U!", To = TestHelper.MyPhoneNumber, From = TestHelper.PhoneNumber, ReturnMsgId = true,
-                Details = true
-            };
+            SmsParams paras = new SmsParams(TestHelper.MyPhoneNumber, "HI2U!")
+            { From = TestHelper.PhoneNumber, ReturnMsgId = true, Details = true };
 
             string[] lines = Util.SplitByLine(await BaseTest.Client.Sms(paras));
 
@@ -58,9 +55,8 @@ namespace Sms77.Tests {
 
         [Test]
         public async Task SingleJson() {
-            SmsParams paras = new SmsParams {
-                Text = "HI2U!", To = TestHelper.MyPhoneNumber, From = TestHelper.PhoneNumber, Json = true
-            };
+            SmsParams paras = new SmsParams(TestHelper.MyPhoneNumber, "HI2U!") 
+            { From = TestHelper.PhoneNumber, Json = true };
 
             AssertJson(await BaseTest.Client.Sms(paras));
         }

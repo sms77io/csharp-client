@@ -14,4 +14,18 @@ namespace Sms77.Api.Library.Analytics {
         [EnumMember(Value = "country")]
         Country
     }
+    
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum Label {
+        [EnumMember(Value = "all")]
+        All
+    }
+    
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum Subaccount {
+        [EnumMember(Value = "only_main")]
+        OnlyMain,
+        [EnumMember(Value = "all")]
+        All
+    }
 }

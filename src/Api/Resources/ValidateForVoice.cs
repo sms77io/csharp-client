@@ -8,7 +8,7 @@ namespace Sms77.Api.Resources {
         public async Task<Model> Post(string number, string? callback = null) {
             return await PostEndpoint<Model>(
                 Endpoint.ValidateForVoice,
-                new ValidateForVoiceParams {Callback = callback, Number = number});
+                new ValidateForVoiceParams(number) {Callback = callback});
         }
 
         public ValidateForVoice(BaseClient baseClient) : base(baseClient) { }

@@ -41,7 +41,7 @@ namespace Sms77.Examples {
             Console.WriteLine(Written.FromCsv(await Client.Contacts(new ContactsParams {
                 Action = Action.Write,
                 Email = "my@doma.in",
-                Empfaenger = "004901234567890",
+                Recipient = "004901234567890",
                 Nick = "Peter Pan"
             })));
         }
@@ -50,7 +50,7 @@ namespace Sms77.Examples {
             Console.WriteLine(await Client.Contacts(new ContactsParams {
                 Action = Action.Write,
                 Email = "my@doma.in",
-                Empfaenger = "004901234567890",
+                Recipient = "004901234567890",
                 Nick = "Peter Pan",
                 Json = true
             }));
@@ -60,7 +60,7 @@ namespace Sms77.Examples {
             Console.WriteLine(Written.FromCsv(await Client.Contacts(new ContactsParams {
                 Action = Action.Write,
                 Email = "my@doma.in",
-                Empfaenger = "+4901234567890",
+                Recipient = "+4901234567890",
                 Nick = "PeterPan",
                 Id = 6351513
             })));
@@ -70,7 +70,7 @@ namespace Sms77.Examples {
             Console.WriteLine(await Client.Contacts(new ContactsParams {
                 Action = Action.Write,
                 Email = "my@doma.in",
-                Empfaenger = "+4901234567890",
+                Recipient = "+4901234567890",
                 Nick = "PeterPan",
                 Id = 63125314,
                 Json = true

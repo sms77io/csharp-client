@@ -5,7 +5,7 @@ using Sms77.Api.Library.Status;
 namespace Sms77.Api.Resources {
     public class Status : Resource {
         private async Task<string> Request(ulong id) {
-            return await GetEndpoint<string>(Endpoint.Status, new StatusParams {MsgId = id});
+            return await GetEndpoint<string>(Endpoint.Status, new StatusParams(id));
         }
 
         public async Task<string> Text(ulong id) {

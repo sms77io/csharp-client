@@ -2,8 +2,13 @@ using Newtonsoft.Json;
 
 namespace Sms77.Api.Library.Sms {
     public class SmsParams {
-        [JsonProperty("to")] public string To { get; set; }
-        [JsonProperty("text")] public string Text { get; set; }
+        public SmsParams(string to, string text) {
+            To = to;
+            Text = text;
+        }
+
+        [JsonProperty("to")] public string To { get; private set; }
+        [JsonProperty("text")] public string Text { get; private set; }
         [JsonProperty("from")] public string? From { get; set; }
         [JsonProperty("debug")] public bool? Debug { get; set; }
         [JsonProperty("delay")] public string? Delay { get; set; }

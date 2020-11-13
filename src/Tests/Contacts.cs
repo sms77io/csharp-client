@@ -22,10 +22,9 @@ namespace Sms77.Tests {
         }
 
         private async Task<Written> Create(bool json) {
-            var res = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = Action.Write,
+            var res = await BaseTest.Client.Contacts(new ContactsParams(Action.Write) {
                 Email = "my@doma.in",
-                Empfaenger = "004901234567890",
+                Recipient = "004901234567890",
                 Nick = "Peter Pan",
                 Json = json
             });
@@ -38,16 +37,14 @@ namespace Sms77.Tests {
         }
 
         private async Task<dynamic> Deletion(ulong id, bool json) {
-            return await BaseTest.Client.Contacts(new ContactsParams {
-                Action = Action.Delete,
+            return await BaseTest.Client.Contacts(new ContactsParams(Action.Delete) {
                 Id = id,
                 Json = json
             });
         }
 
         private async Task Delete(bool json) {
-            Written written = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = Action.Write,
+            Written written = await BaseTest.Client.Contacts(new ContactsParams(Action.Write) {
                 Json = true
             });
 
@@ -57,8 +54,7 @@ namespace Sms77.Tests {
         }
 
         private async Task DeleteNonExisting(bool json) {
-            var res = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = Action.Delete,
+            var res = await BaseTest.Client.Contacts(new ContactsParams(Action.Delete) {
                 Id = 0000000,
                 Json = json
             });
@@ -69,10 +65,9 @@ namespace Sms77.Tests {
         private async Task Edit(bool json) {
             var contact = await Create(json);
 
-            var res = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = Action.Write,
+            var res = await BaseTest.Client.Contacts(new ContactsParams(Action.Write) {
                 Email = "my@doma.in",
-                Empfaenger = "+4901234567890",
+                Recipient = "+4901234567890",
                 Nick = "PeterPan",
                 Id = contact.Id,
                 Json = json
@@ -85,7 +80,7 @@ namespace Sms77.Tests {
 
         private async Task ReadAll(bool json) {
             var res = await BaseTest.Client.Contacts(
-                new ContactsParams {Action = Action.Read, Json = json});
+                new ContactsParams(Action.Read) {Json = json});
 
             foreach (var contact in json ? res : Util.SplitByLine(res)) {
                 AssertContact(json ? contact : Contact.FromCsv(contact));
@@ -95,8 +90,7 @@ namespace Sms77.Tests {
         private async Task ReadOne(bool json) {
             var contact = await Create(json);
 
-            var res = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = Action.Read,
+            var res = await BaseTest.Client.Contacts(new ContactsParams(Action.Read) {
                 Id = contact.Id,
                 Json = json
             });

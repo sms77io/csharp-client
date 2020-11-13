@@ -10,7 +10,7 @@ namespace Sms77.Tests {
     public class Hooks {
         [Test]
         public async Task Read() {
-            var paras = new Params {Action = Action.Read};
+            var paras = new Params(Action.Read);
 
             Read read = await BaseTest.Client.Hooks(paras);
 
@@ -59,8 +59,7 @@ namespace Sms77.Tests {
             EventType eventType,
             RequestMethod requestMethod = RequestMethod.Post,
             string? targetUrl = null) {
-            Subscription subscribed = await BaseTest.Client.Hooks(new Params {
-                Action = Action.Subscribe,
+            Subscription subscribed = await BaseTest.Client.Hooks(new Params(Action.Subscribe) {
                 EventType = eventType,
                 RequestMethod = requestMethod,
                 TargetUrl = targetUrl ?? $"http://my.tld/{Guid.NewGuid()}"
@@ -70,8 +69,7 @@ namespace Sms77.Tests {
         }
 
         private static async Task<Unsubscription> Unsubscription(int id) {
-            return await BaseTest.Client.Hooks(new Params {
-                Action = Action.Unsubscribe,
+            return await BaseTest.Client.Hooks(new Params(Action.Unsubscribe) {
                 Id = id
             });
         }

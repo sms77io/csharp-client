@@ -33,7 +33,7 @@ namespace Sms77.Api {
                 case Action.Write:
                     return await resource.Write(new WriteParams {
                         Email = args.Email,
-                        Empfaenger = args.Empfaenger,
+                        Empfaenger = args.Recipient,
                         Id = args.Id,
                         Json = args.Json,
                         Nick = args.Nick

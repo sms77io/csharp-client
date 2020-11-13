@@ -5,16 +5,13 @@ using Sms77.Api.Library.Voice;
 namespace Sms77.Tests {
     [TestFixture]
     public class Voice {
-        public static readonly VoiceParams TextParams = new VoiceParams {
+        public static readonly VoiceParams TextParams = new VoiceParams(TestHelper.PhoneNumber, "HI2U") {
             From = TestHelper.PhoneNumber,
-            Text = "HI2U",
-            To = TestHelper.PhoneNumber,
         };
 
-        public static readonly VoiceParams XmlParams = new VoiceParams {
+        public static readonly VoiceParams XmlParams = new VoiceParams(TestHelper.PhoneNumber, 
+            "<?xml version='1.0' encoding='UTF-8'?><Response><Say>Thanks for calling!</Say></Response>") {
             From = TestHelper.PhoneNumber,
-            Text = "<?xml version='1.0' encoding='UTF-8'?><Response><Say>Thanks for calling!</Say></Response>",
-            To = TestHelper.PhoneNumber,
             Xml = true
         };
 

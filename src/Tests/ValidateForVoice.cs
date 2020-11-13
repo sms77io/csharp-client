@@ -9,7 +9,7 @@ namespace Sms77.Tests {
         [Test]
         public async Task Retrieve() {
             Api.Library.ValidateForVoice.ValidateForVoice validation =
-                await BaseTest.Client.ValidateForVoice(new ValidateForVoiceParams {Number = TestHelper.PhoneNumber});
+                await BaseTest.Client.ValidateForVoice(new ValidateForVoiceParams(TestHelper.PhoneNumber));
 
             Assert.That(validation.Code, TestHelper.IsDummyKey ? (IResolveConstraint) Is.Null : Is.Not.Empty);
             Assert.That(validation.Error, Is.Null);
@@ -22,7 +22,7 @@ namespace Sms77.Tests {
 
             var v =
                 await BaseTest.Client.ValidateForVoice(
-                    new ValidateForVoiceParams {Callback = null, Number = number});
+                    new ValidateForVoiceParams(number) {Callback = null});
 
             Assert.That(v.Success, TestHelper.IsDummyKey ? (IResolveConstraint) Is.True : Is.False);
             Assert.That(v.Id, Is.Null);
