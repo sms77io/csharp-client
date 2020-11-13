@@ -16,21 +16,21 @@ namespace Sms77.Api.Tests {
             Assert.That(contact.Id, Is.Positive);
         }
 
-        private void AssertWriteContact(WriteContact contact) {
+        private void AssertWriteContact(Written contact) {
             Assert.That(contact.Return, Is.EqualTo(SuccessCode));
             Assert.That(contact.Id, Is.Positive);
         }
 
-        private async Task<WriteContact> Create(bool json) {
+        private async Task<Written> Create(bool json) {
             var res = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = ContactsAction.write,
+                Action = Action.write,
                 Email = "my@doma.in",
                 Empfaenger = "004901234567890",
                 Nick = "Peter Pan",
                 Json = json
             });
 
-            return json ? res : WriteContact.FromCsv(res);
+            return json ? res : Written.FromCsv(res);
         }
 
         private async Task Write(bool json) {
@@ -39,15 +39,15 @@ namespace Sms77.Api.Tests {
 
         private async Task<dynamic> Deletion(ulong id, bool json) {
             return await BaseTest.Client.Contacts(new ContactsParams {
-                Action = ContactsAction.del,
+                Action = Action.del,
                 Id = id,
                 Json = json
             });
         }
 
         private async Task Delete(bool json) {
-            WriteContact written = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = ContactsAction.write,
+            Written written = await BaseTest.Client.Contacts(new ContactsParams {
+                Action = Action.write,
                 Json = true
             });
 
@@ -58,7 +58,7 @@ namespace Sms77.Api.Tests {
 
         private async Task DeleteNonExisting(bool json) {
             var res = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = ContactsAction.del,
+                Action = Action.del,
                 Id = 0000000,
                 Json = json
             });
@@ -70,7 +70,7 @@ namespace Sms77.Api.Tests {
             var contact = await Create(json);
 
             var res = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = ContactsAction.write,
+                Action = Action.write,
                 Email = "my@doma.in",
                 Empfaenger = "+4901234567890",
                 Nick = "PeterPan",
@@ -78,14 +78,14 @@ namespace Sms77.Api.Tests {
                 Json = json
             });
 
-            AssertWriteContact(json ? res : WriteContact.FromCsv(res));
+            AssertWriteContact(json ? res : Written.FromCsv(res));
 
             await Deletion(contact.Id, json);
         }
 
         private async Task ReadAll(bool json) {
             var res = await BaseTest.Client.Contacts(
-                new ContactsParams {Action = ContactsAction.read, Json = json});
+                new ContactsParams {Action = Action.read, Json = json});
 
             foreach (var contact in json ? res : Util.SplitByLine(res)) {
                 AssertContact(json ? contact : Contact.FromCsv(contact));
@@ -96,7 +96,7 @@ namespace Sms77.Api.Tests {
             var contact = await Create(json);
 
             var res = await BaseTest.Client.Contacts(new ContactsParams {
-                Action = ContactsAction.read,
+                Action = Action.read,
                 Id = contact.Id,
                 Json = json
             });

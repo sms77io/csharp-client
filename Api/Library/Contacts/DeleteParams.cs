@@ -2,10 +2,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Sms77.Api.Library.Contacts {
-    public class ContactsDeleteParams {
+    public class DeleteParams {
         [JsonProperty("action"), JsonConverter(typeof(StringEnumConverter))]
-        public const ContactsAction Action = ContactsAction.del;
+        public const Action Action = Contacts.Action.del;
         [JsonProperty("id")] public ulong Id { get; set; }
-        [JsonProperty("json")] public bool Json { get; set; }
+        [JsonProperty("json")] public bool? Json { get; set; }
     }
 }

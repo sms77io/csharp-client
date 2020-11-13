@@ -3,17 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Contacts;
+using Action = Sms77.Api.Library.Contacts.Action;
 
 namespace Sms77.Api.Examples {
     class Contacts : BaseExample {
         public async Task ReadContactCsv() {
             Console.WriteLine(Contact.FromCsv(await Client.Contacts(
-                new ContactsParams {Action = ContactsAction.read, Id = 15161613})));
+                new ContactsParams {Action = Action.read, Id = 15161613})));
         }
 
         public async Task ReadContactsCsv() {
             var csv = await Client.Contacts(
-                new ContactsParams {Action = ContactsAction.read});
+                new ContactsParams {Action = Action.read});
 
             foreach (var contact in Util.SplitByLine(csv)) {
                 Console.WriteLine(Contact.FromCsv(contact));
@@ -22,14 +23,14 @@ namespace Sms77.Api.Examples {
 
         public async Task ReadContactJson() {
             Contact[] contacts = await Client.Contacts(
-                new ContactsParams {Action = ContactsAction.read, Id = 15161613, Json = true});
+                new ContactsParams {Action = Action.read, Id = 15161613, Json = true});
 
             Console.WriteLine(contacts.First());
         }
 
         public async Task ReadContactsJson() {
             Contact[] contacts = await Client.Contacts(
-                new ContactsParams {Action = ContactsAction.read, Json = true});
+                new ContactsParams {Action = Action.read, Json = true});
 
             foreach (var contact in contacts) {
                 Console.WriteLine(contact);
@@ -37,8 +38,8 @@ namespace Sms77.Api.Examples {
         }
 
         public async Task WriteContactCsv() {
-            Console.WriteLine(WriteContact.FromCsv(await Client.Contacts(new ContactsParams {
-                Action = ContactsAction.write,
+            Console.WriteLine(Written.FromCsv(await Client.Contacts(new ContactsParams {
+                Action = Action.write,
                 Email = "my@doma.in",
                 Empfaenger = "004901234567890",
                 Nick = "Peter Pan"
@@ -47,7 +48,7 @@ namespace Sms77.Api.Examples {
 
         public async Task WriteContactJson() {
             Console.WriteLine(await Client.Contacts(new ContactsParams {
-                Action = ContactsAction.write,
+                Action = Action.write,
                 Email = "my@doma.in",
                 Empfaenger = "004901234567890",
                 Nick = "Peter Pan",
@@ -56,8 +57,8 @@ namespace Sms77.Api.Examples {
         }
 
         public async Task EditContactCsv() {
-            Console.WriteLine(WriteContact.FromCsv(await Client.Contacts(new ContactsParams {
-                Action = ContactsAction.write,
+            Console.WriteLine(Written.FromCsv(await Client.Contacts(new ContactsParams {
+                Action = Action.write,
                 Email = "my@doma.in",
                 Empfaenger = "+4901234567890",
                 Nick = "PeterPan",
@@ -67,7 +68,7 @@ namespace Sms77.Api.Examples {
 
         public async Task EditContactJson() {
             Console.WriteLine(await Client.Contacts(new ContactsParams {
-                Action = ContactsAction.write,
+                Action = Action.write,
                 Email = "my@doma.in",
                 Empfaenger = "+4901234567890",
                 Nick = "PeterPan",
@@ -77,30 +78,30 @@ namespace Sms77.Api.Examples {
         }
 
         public async Task DelContactCsv() {
-            Console.WriteLine(DelContact.FromCsv(await Client.Contacts(new ContactsParams {
-                Action = ContactsAction.del,
+            Console.WriteLine(Deleted.FromCsv(await Client.Contacts(new ContactsParams {
+                Action = Action.del,
                 Id = 13513516
             })));
         }
 
         public async Task DelContactJson() {
             Console.WriteLine(await Client.Contacts(new ContactsParams {
-                Action = ContactsAction.del,
+                Action = Action.del,
                 Id = 6134133,
                 Json = true
             }));
         }
 
         public async Task DelNonExistingContactCsv() {
-            Console.WriteLine(DelContact.FromCsv(await Client.Contacts(new ContactsParams {
-                Action = ContactsAction.del,
+            Console.WriteLine(Deleted.FromCsv(await Client.Contacts(new ContactsParams {
+                Action = Action.del,
                 Id = 51341255,
             })));
         }
 
         public async Task DelNonExistingContactJson() {
             Console.WriteLine(await Client.Contacts(new ContactsParams {
-                Action = ContactsAction.del,
+                Action = Action.del,
                 Id = 63653151,
                 Json = true
             }));

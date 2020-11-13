@@ -9,6 +9,7 @@ using Sms77.Api.Library.Sms;
 using Sms77.Api.Library.Status;
 using Sms77.Api.Library.ValidateForVoice;
 using Sms77.Api.Library.Voice;
+using Action = Sms77.Api.Library.Contacts.Action;
 using Analytics = Sms77.Api.Library.Analytics.Analytics;
 
 namespace Sms77.Api {
@@ -27,10 +28,10 @@ namespace Sms77.Api {
             var resource = new Resources.Contacts(this);
 
             switch (args.Action) {
-                case ContactsAction.read:
-                    return await resource.Read(args.Json, args.Id);
-                case ContactsAction.write:
-                    return await resource.Write(new ContactsWriteParams {
+                case Action.read:
+                    return await resource.Read(new Library.Contacts.ReadParams {Id = args.Id, Json = args.Json});
+                case Action.write:
+                    return await resource.Write(new WriteParams {
                         Email = args.Email,
                         Empfaenger = args.Empfaenger,
                         Id = args.Id,
@@ -43,7 +44,7 @@ namespace Sms77.Api {
                 throw new ApiException($"Missing Id for Deletion!");
             }
 
-            return await resource.Delete((ulong) args.Id, args.Json);
+            return await resource.Delete(new DeleteParams {Id = (ulong) args.Id, Json = args.Json});
         }
 
         public async Task<dynamic> Hooks(Params args) {

@@ -1,5 +1,5 @@
 namespace Sms77.Api.Library.Contacts {
-    public enum ContactsAction {
+    public enum Action {
         read,
         write,
         del
