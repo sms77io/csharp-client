@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Sms77.Api.Library.Hooks;
 using Action = Sms77.Api.Library.Hooks.Action;
 
-namespace Sms77.Api.Examples {
+namespace Sms77.Examples {
     class Hooks : BaseExample {
         static async Task Read() {
             Read read = await Client.Hooks(new Params {Action = Action.read});

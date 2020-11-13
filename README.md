@@ -27,4 +27,4 @@ class Program
 }
 ```
 
-For further examples have a look at the [examples](./Api/Examples).
+For further examples have a look at the [examples](./Examples).

@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Sms77.Api.Library;
 using Sms77.Api.Library.Analytics;
 
-namespace Sms77.Api.Examples {
+namespace Sms77.Examples {
     class Analytics : BaseExample {
         static async Task Retrieve() {
             Console.WriteLine(await Client.Analytics(null));

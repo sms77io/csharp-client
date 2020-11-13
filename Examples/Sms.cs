@@ -1,8 +1,7 @@
 using System;
-using Sms77.Api.Library;
 using Sms77.Api.Library.Sms;
 
-namespace Sms77.Api.Examples {
+namespace Sms77.Examples {
     class Sms : BaseExample {
         public async void Single(string to) {
             Console.WriteLine(await Client.Sms(new SmsParams {

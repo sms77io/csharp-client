@@ -1,10 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Sms77.Api.Tests;
-using Sms77.Api.Library;
 using Sms77.Api.Library.Lookup;
+using Sms77.Api.Tests;
 
-namespace Sms77.Api.Examples {
+namespace Sms77.Examples {
     class Lookup : BaseExample {
         public async Task Cnam() {
             Console.WriteLine(await Client.Lookup(

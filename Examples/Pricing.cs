@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Sms77.Api.Library;
 using Sms77.Api.Library.Pricing;
 
-namespace Sms77.Api.Examples {
+namespace Sms77.Examples {
     class Pricing : BaseExample {
         static async Task RetrieveAllAsCsv() {
             Console.WriteLine(await Client.Pricing(new PricingParams {Format = PricingFormat.csv}));

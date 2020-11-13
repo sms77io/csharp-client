@@ -5,7 +5,7 @@ using Sms77.Api.Library;
 using Sms77.Api.Library.Contacts;
 using Action = Sms77.Api.Library.Contacts.Action;
 
-namespace Sms77.Api.Examples {
+namespace Sms77.Examples {
     class Contacts : BaseExample {
         public async Task ReadContactCsv() {
             Console.WriteLine(Contact.FromCsv(await Client.Contacts(
