@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Sms77.Api.Library.Lookup {
-    public class LookupCnamParams {
+    public class CnamParams {
         [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
         public const LookupType Type = LookupType.cnam;
 

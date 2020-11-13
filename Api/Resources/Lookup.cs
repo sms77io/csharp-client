@@ -9,25 +9,25 @@ namespace Sms77.Api.Resources {
         }
 
         public async Task<CnamLookup> Cnam(string number) {
-            return await Request<CnamLookup>(new LookupCnamParams {Number = number});
+            return await Request<CnamLookup>(new CnamParams {Number = number});
         }
 
         public async Task<FormatLookup> Format(string number) {
-            return await Request<FormatLookup>(new LookupFormatParams {Number = number});
+            return await Request<FormatLookup>(new FormatParams {Number = number});
         }
 
         public async Task<HlrLookup> Hlr(string number) {
-            return await Request<HlrLookup>(new LookupHlrParams {Number = number});
+            return await Request<HlrLookup>(new HlrParams {Number = number});
         }
 
         public async Task<string> Mnp(string number) {
-            return await Request<string>(new LookupMnpParams {Number = number});
+            return await Request<string>(new MnpParams {Number = number});
         }
 
         public async Task<MnpLookup> Mnp(string number, bool json) {
             _ = json;
 
-            return await Request<MnpLookup>(new LookupMnpParams {Number = number, Json = true});
+            return await Request<MnpLookup>(new MnpParams {Number = number, Json = true});
         }
 
         public Lookup(BaseClient baseClient) : base(baseClient) { }
