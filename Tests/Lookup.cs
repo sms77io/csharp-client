@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Sms77.Api.Library;
 using Sms77.Api.Library.Lookup;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [TestFixture]
     public class Lookup {
         private void AssertCarrier(Carrier actual, Carrier expected) {

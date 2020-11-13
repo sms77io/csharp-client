@@ -1,6 +1,6 @@
 using System;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [Serializable()]
     public class MissingEnvironmentVariableException : Exception {
         public MissingEnvironmentVariableException() {

@@ -1,6 +1,7 @@
 using NUnit.Framework;
+using Sms77.Api;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [SetUpFixture]
     public class BaseTest {
         internal static Client Client;

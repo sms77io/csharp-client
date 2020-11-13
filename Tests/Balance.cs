@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [TestFixture]
     public class Balance {
         [Test]

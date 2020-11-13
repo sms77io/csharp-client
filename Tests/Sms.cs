@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Sms;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [TestFixture]
     public class Sms {
         private readonly string _successCode = "100";
@@ -65,7 +65,7 @@ namespace Sms77.Api.Tests {
             AssertJson(await BaseTest.Client.Sms(paras));
         }
 
-        private void AssertJson(Library.Sms.Sms sms) {
+        private void AssertJson(Api.Library.Sms.Sms sms) {
             var debug = "true" == sms.Debug;
             double totalPrice = 0;
 

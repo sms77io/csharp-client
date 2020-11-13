@@ -5,10 +5,10 @@ using NUnit.Framework;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Analytics;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [TestFixture]
     public class Analytics {
-        private static void AssertEntries(Library.Analytics.Analytics[] analytics) {
+        private static void AssertEntries(Api.Library.Analytics.Analytics[] analytics) {
             foreach (var a in analytics) {
                 Assert.That(a.Date, Is.Not.Empty);
                 Assert.That(a.Economy, Is.Not.Negative);

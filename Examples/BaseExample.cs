@@ -1,5 +1,5 @@
 using Sms77.Api;
-using Sms77.Api.Tests;
+using Sms77.Tests;
 
 namespace Sms77.Examples {
     class BaseExample {

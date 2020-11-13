@@ -5,7 +5,7 @@ using Sms77.Api.Library;
 using Sms77.Api.Library.Hooks;
 using Action = Sms77.Api.Library.Hooks.Action;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [TestFixture]
     public class Hooks {
         [Test]

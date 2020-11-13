@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Sms77.Api.Library;
 using Sms77.Api.Library.Voice;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [TestFixture]
     public class Voice {
         public static readonly VoiceParams TextParams = new VoiceParams {
@@ -19,7 +18,7 @@ namespace Sms77.Api.Tests {
             Xml = true
         };
 
-        private void AssertResponseObject(Library.Voice.Voice voice) {
+        private void AssertResponseObject(Api.Library.Voice.Voice voice) {
             Assert.That(voice.Code, Is.TypeOf<ushort>());
             Assert.That(voice.Id, Is.TypeOf<uint>());
             Assert.That(voice.Cost, Is.TypeOf<double>());
@@ -27,12 +26,12 @@ namespace Sms77.Api.Tests {
 
         [Test]
         public async Task Post() {
-            AssertResponseObject(new Library.Voice.Voice(await BaseTest.Client.Voice(TextParams)));
+            AssertResponseObject(new Api.Library.Voice.Voice(await BaseTest.Client.Voice(TextParams)));
         }
 
         [Test]
         public async Task PostXml() {
-            AssertResponseObject(new Library.Voice.Voice(await BaseTest.Client.Voice(XmlParams)));
+            AssertResponseObject(new Api.Library.Voice.Voice(await BaseTest.Client.Voice(XmlParams)));
         }
 
         [Test]

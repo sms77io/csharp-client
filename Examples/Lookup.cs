@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Sms77.Api.Library.Lookup;
-using Sms77.Api.Tests;
+using Sms77.Tests;
 
 namespace Sms77.Examples {
     class Lookup : BaseExample {

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Sms77.Api.Library;
 using Sms77.Api.Library.Contacts;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     [TestFixture]
     public class Contacts {
         private const int ErrorCode = 151;

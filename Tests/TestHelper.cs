@@ -1,6 +1,6 @@
 using System;
 
-namespace Sms77.Api.Tests {
+namespace Sms77.Tests {
     internal static class TestHelper {
         internal static readonly string ApiDummyKeyEnvProperty = "SMS77_DUMMY_API_KEY";
         internal static readonly string ApiKeyEnvProperty = "SMS77_API_KEY";
