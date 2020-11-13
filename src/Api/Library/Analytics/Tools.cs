@@ -4,10 +4,10 @@ namespace Sms77.Api.Library.Analytics {
     public static class Tools {
         public static AnalyticsParams DefaultParams = new AnalyticsParams {
             End = DateTime.Today.ToString(DateFormat),
-            GroupBy = GroupBy.date,
-            Label = Enum.GetName(typeof(Label), Label.all),
+            GroupBy = GroupBy.Date,
+            Label = Enum.GetName(typeof(Label), Label.All),
             Start = DateTime.Today.AddDays(-30).ToString(DateFormat),
-            Subaccounts = Enum.GetName(typeof(Subaccount), Subaccount.only_main)
+            Subaccounts = Enum.GetName(typeof(Subaccount), Subaccount.OnlyMain)
         };
 
         private const string DateFormat = "yyyy-M-d";

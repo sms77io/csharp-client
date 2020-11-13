@@ -10,7 +10,7 @@ namespace Sms77.Tests {
     public class Hooks {
         [Test]
         public async Task Read() {
-            var paras = new Params {Action = Action.read};
+            var paras = new Params {Action = Action.Read};
 
             Read read = await BaseTest.Client.Hooks(paras);
 
@@ -41,7 +41,7 @@ namespace Sms77.Tests {
 
         [Test]
         public async Task SubscribeFail() {
-            var subscribed = await Subscription(EventType.dlr, RequestMethod.GET, "IamNoValidUrl");
+            var subscribed = await Subscription(EventType.SmsStatusUpdate, RequestMethod.Get, "IamNoValidUrl");
 
             Assert.That(subscribed.Success, Is.False);
             Assert.That(subscribed.Id, Is.Zero);
@@ -49,7 +49,7 @@ namespace Sms77.Tests {
 
         [Test]
         public async Task Unsubscribe() {
-            var subscribed = await Subscription(EventType.dlr);
+            var subscribed = await Subscription(EventType.SmsStatusUpdate);
             var unsubscribed = await Unsubscription(subscribed.Id);
 
             Assert.That(unsubscribed.Success, Is.True);
@@ -57,10 +57,10 @@ namespace Sms77.Tests {
 
         private static async Task<Subscription> Subscription(
             EventType eventType,
-            RequestMethod requestMethod = RequestMethod.POST,
+            RequestMethod requestMethod = RequestMethod.Post,
             string? targetUrl = null) {
             Subscription subscribed = await BaseTest.Client.Hooks(new Params {
-                Action = Action.subscribe,
+                Action = Action.Subscribe,
                 EventType = eventType,
                 RequestMethod = requestMethod,
                 TargetUrl = targetUrl ?? $"http://my.tld/{Guid.NewGuid()}"
@@ -71,7 +71,7 @@ namespace Sms77.Tests {
 
         private static async Task<Unsubscription> Unsubscription(int id) {
             return await BaseTest.Client.Hooks(new Params {
-                Action = Action.unsubscribe,
+                Action = Action.Unsubscribe,
                 Id = id
             });
         }

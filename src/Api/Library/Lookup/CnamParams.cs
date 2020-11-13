@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 namespace Sms77.Api.Library.Lookup {
     public class CnamParams {
         [JsonProperty("type"), JsonConverter(typeof(StringEnumConverter))]
-        public const LookupType Type = LookupType.cnam;
+        public const LookupType Type = LookupType.Cnam;
 
         [JsonProperty("number")] public string Number { get; set; }
     }

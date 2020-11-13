@@ -1,6 +1,10 @@
+using System.Runtime.Serialization;
+
 namespace Sms77.Api.Library.Hooks {
     public enum RequestMethod {
-        GET,
-        POST
+        [EnumMember(Value = "GET")]
+        Get,
+        [EnumMember(Value = "POST")]
+        Post
     }
 }

@@ -17,11 +17,11 @@ namespace Sms77.Examples {
         }
 
         static async Task RetrieveGroupedBy() {
-            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.label}));
+            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.Label}));
 
-            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.subaccount}));
+            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.Subaccount}));
 
-            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.country}));
+            Console.WriteLine(await Client.Analytics(new AnalyticsParams {GroupBy = GroupBy.Country}));
         }
 
         static async Task RetrieveByTimeFrame() {

@@ -7,7 +7,7 @@ namespace Sms77.Tests {
     public class Pricing {
         [Test]
         public async Task TestPricingGlobalCsv() {
-            string pricing = await BaseTest.Client.Pricing(new PricingParams {Format = PricingFormat.csv});
+            string pricing = await BaseTest.Client.Pricing(new PricingParams {Format = PricingFormat.Csv});
 
             Assert.That(pricing, Is.Not.Empty);
         }
@@ -23,7 +23,7 @@ namespace Sms77.Tests {
         [Test]
         public async Task TestPricingGermanyCsv() {
             string pricing
-                = await BaseTest.Client.Pricing(new PricingParams {Country = "de", Format = PricingFormat.csv});
+                = await BaseTest.Client.Pricing(new PricingParams {Country = "de", Format = PricingFormat.Csv});
 
             Assert.That(pricing, Is.Not.Empty);
         }

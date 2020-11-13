@@ -6,7 +6,7 @@ using Action = Sms77.Api.Library.Hooks.Action;
 namespace Sms77.Examples {
     class Hooks : BaseExample {
         static async Task Read() {
-            Read read = await Client.Hooks(new Params {Action = Action.read});
+            Read read = await Client.Hooks(new Params {Action = Action.Read});
 
             if (!read.Success) {
                 Console.WriteLine("Failed to retrieve hooks");
@@ -26,32 +26,32 @@ namespace Sms77.Examples {
         }
 
         static async Task SubscribeSmsStatusPost() {
-            await Subscription(EventType.dlr);
+            await Subscription(EventType.SmsStatusUpdate);
         }
 
         static async Task SubscribeInboundSmsPost() {
-            await Subscription(EventType.sms_mo);
+            await Subscription(EventType.NewInboundSms);
         }
 
         static async Task SubscribeVoiceStatusPost() {
-            await Subscription(EventType.voice_status);
+            await Subscription(EventType.VoiceStatusUpdate);
         }
 
         static async Task SubscribeSmsStatusGet() {
-            await Subscription(EventType.dlr, RequestMethod.GET);
+            await Subscription(EventType.SmsStatusUpdate, RequestMethod.Get);
         }
 
         static async Task SubscribeInboundSmsGet() {
-            await Subscription(EventType.sms_mo, RequestMethod.GET);
+            await Subscription(EventType.NewInboundSms, RequestMethod.Get);
         }
 
         static async Task SubscribeVoiceStatusGet() {
-            await Subscription(EventType.voice_status, RequestMethod.GET);
+            await Subscription(EventType.VoiceStatusUpdate, RequestMethod.Get);
         }
 
         static async Task Unsubscribe(int id = 0) {
             if (0 == id) {
-                var subscribed = await Subscription(EventType.dlr);
+                var subscribed = await Subscription(EventType.SmsStatusUpdate);
 
                 id = subscribed.Id;
             }
@@ -61,11 +61,11 @@ namespace Sms77.Examples {
 
         static async Task<Subscription> Subscription(
             EventType eventType,
-            RequestMethod requestMethod = RequestMethod.POST) {
+            RequestMethod requestMethod = RequestMethod.Post) {
             var targetUrl = "http://my.tld/" + Guid.NewGuid();
 
             Subscription subscribed = await Client.Hooks(new Params {
-                Action = Action.subscribe,
+                Action = Action.Subscribe,
                 EventType = eventType,
                 RequestMethod = requestMethod,
                 TargetUrl = targetUrl
@@ -89,7 +89,7 @@ namespace Sms77.Examples {
 
         static async Task Unsubscription(int id) {
             Unsubscription unsubscribed = await Client.Hooks(new Params {
-                Action = Action.unsubscribe,
+                Action = Action.Unsubscribe,
                 Id = id
             });
 

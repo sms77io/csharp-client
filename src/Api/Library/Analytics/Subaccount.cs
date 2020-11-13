@@ -1,6 +1,10 @@
+using System.Runtime.Serialization;
+
 namespace Sms77.Api.Library.Analytics {
     public enum Subaccount {
-        only_main,
-        all
+        [EnumMember(Value = "only_main")]
+        OnlyMain,
+        [EnumMember(Value = "all")]
+        All
     }
 }

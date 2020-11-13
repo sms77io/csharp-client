@@ -1,7 +1,12 @@
+using System.Runtime.Serialization;
+
 namespace Sms77.Api.Library.Hooks {
     public enum Action {
-        read,
-        subscribe,
-        unsubscribe
+        [EnumMember(Value = "read")]
+        Read,
+        [EnumMember(Value = "subscribe")]
+        Subscribe,
+        [EnumMember(Value = "unsubscribe")]
+        Unsubscribe
     }
 }

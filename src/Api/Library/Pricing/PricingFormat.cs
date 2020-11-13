@@ -1,6 +1,10 @@
+using System.Runtime.Serialization;
+
 namespace Sms77.Api.Library.Pricing {
     public enum PricingFormat {
-        csv,
-        json
+        [EnumMember(Value = "csv")]
+        Csv,
+        [EnumMember(Value = "json")]
+        Json
     }
 }

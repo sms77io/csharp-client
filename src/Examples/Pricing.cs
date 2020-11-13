@@ -5,11 +5,11 @@ using Sms77.Api.Library.Pricing;
 namespace Sms77.Examples {
     class Pricing : BaseExample {
         static async Task RetrieveAllAsCsv() {
-            Console.WriteLine(await Client.Pricing(new PricingParams {Format = PricingFormat.csv}));
+            Console.WriteLine(await Client.Pricing(new PricingParams {Format = PricingFormat.Csv}));
         }
 
         static async Task RetrieveCountryGermanyAsCsv() {
-            Console.WriteLine(await Client.Pricing(new PricingParams {Country = "de", Format = PricingFormat.csv}));
+            Console.WriteLine(await Client.Pricing(new PricingParams {Country = "de", Format = PricingFormat.Csv}));
         }
 
         static async Task RetrieveAllAsJson() {

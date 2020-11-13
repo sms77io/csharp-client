@@ -15,7 +15,7 @@ namespace Sms77.Api.Resources {
         }
 
         public async Task<string> Csv(string? country) {
-            return await Get<string>(country, PricingFormat.csv);
+            return await Get<string>(country, PricingFormat.Csv);
         }
 
         public async Task<Library.Pricing.Pricing> Json(string? country) {

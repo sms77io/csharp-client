@@ -28,9 +28,9 @@ namespace Sms77.Api {
             var resource = new Resources.Contacts(this);
 
             switch (args.Action) {
-                case Action.read:
+                case Action.Read:
                     return await resource.Read(new Library.Contacts.ReadParams {Id = args.Id, Json = args.Json});
-                case Action.write:
+                case Action.Write:
                     return await resource.Write(new WriteParams {
                         Email = args.Email,
                         Empfaenger = args.Empfaenger,
@@ -51,12 +51,12 @@ namespace Sms77.Api {
             var resource = new Resources.Hooks(this);
 
             return args.Action switch {
-                Library.Hooks.Action.subscribe => await resource.Subscribe(new SubscribeParams {
+                Library.Hooks.Action.Subscribe => await resource.Subscribe(new SubscribeParams {
                     EventType = (EventType) args.EventType,
                     TargetUrl = args.TargetUrl,
                     RequestMethod = (RequestMethod) args.RequestMethod,
                 }),
-                Library.Hooks.Action.unsubscribe => await resource.Unsubscribe((int) args.Id),
+                Library.Hooks.Action.Unsubscribe => await resource.Unsubscribe((int) args.Id),
                 _ => await resource.Read()
             };
         }
@@ -65,11 +65,11 @@ namespace Sms77.Api {
             var resource = new Resources.Lookup(this);
 
             switch (args.Type) {
-                case LookupType.format:
+                case LookupType.Formatting:
                     return await resource.Format(args.Number);
-                case LookupType.hlr:
+                case LookupType.Hlr:
                     return await resource.Hlr(args.Number);
-                case LookupType.cnam:
+                case LookupType.Cnam:
                     return await resource.Cnam(args.Number);
                 default:
                     if (true == args.Json) {
@@ -83,7 +83,7 @@ namespace Sms77.Api {
         public async Task<dynamic> Pricing(PricingParams? args = null) {
             var resource = new Resources.Pricing(this);
 
-            if (null != args && PricingFormat.csv == args.Format) {
+            if (null != args && PricingFormat.Csv == args.Format) {
                 return await resource.Csv(args.Country);
             }
 

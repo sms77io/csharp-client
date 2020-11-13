@@ -1,7 +1,12 @@
+using System.Runtime.Serialization;
+
 namespace Sms77.Api.Library.Hooks {
     public enum EventType {
-        sms_mo,
-        dlr,
-        voice_status
+        [EnumMember(Value = "sms_mo")]
+        NewInboundSms,
+        [EnumMember(Value = "dlr")]
+        SmsStatusUpdate,
+        [EnumMember(Value = "voice_status")]
+        VoiceStatusUpdate
     }
 }

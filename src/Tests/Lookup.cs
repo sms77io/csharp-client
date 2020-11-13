@@ -15,7 +15,7 @@ namespace Sms77.Tests {
         [Test]
         public async Task Cnam() {
             CnamLookup cnam = await BaseTest.Client.Lookup(
-                new LookupParams {Type = LookupType.cnam, Number = TestHelper.PhoneNumber});
+                new LookupParams {Type = LookupType.Cnam, Number = TestHelper.PhoneNumber});
 
             Assert.That(cnam.Code, Is.EqualTo("100"));
             Assert.That(cnam.Name, Is.EqualTo("GERMANY"));
@@ -26,7 +26,7 @@ namespace Sms77.Tests {
         [Test]
         public async Task Format() {
             FormatLookup format = await BaseTest.Client.Lookup(
-                new LookupParams {Type = LookupType.format, Number = TestHelper.PhoneNumber});
+                new LookupParams {Type = LookupType.Formatting, Number = TestHelper.PhoneNumber});
 
             Assert.That(format.Carrier, Is.Not.Empty);
             Assert.That(format.International, Is.Not.Empty);
@@ -42,7 +42,7 @@ namespace Sms77.Tests {
         [Test]
         public async Task Hlr() {
             HlrLookup hlr = await BaseTest.Client.Lookup(
-                new LookupParams {Type = LookupType.hlr, Number = TestHelper.PhoneNumber});
+                new LookupParams {Type = LookupType.Hlr, Number = TestHelper.PhoneNumber});
 
             Carrier carrier = new Carrier {
                 NetworkCode = "26203",
@@ -95,7 +95,7 @@ namespace Sms77.Tests {
         [Test]
         public async Task MnpAsJson() {
             MnpLookup mnp = await BaseTest.Client.Lookup(
-                new LookupParams {Type = LookupType.mnp, Number = TestHelper.PhoneNumber, Json = true});
+                new LookupParams {Type = LookupType.Mnp, Number = TestHelper.PhoneNumber, Json = true});
 
             Assert.That(mnp.Code, Is.EqualTo(100));
             Assert.That(mnp.Success, Is.True);
@@ -111,7 +111,7 @@ namespace Sms77.Tests {
         [Test]
         public async Task MnpAsText() {
             Assert.That(await BaseTest.Client.Lookup(
-                new LookupParams {Type = LookupType.mnp, Number = TestHelper.PhoneNumber}), Is.EqualTo("eplus"));
+                new LookupParams {Type = LookupType.Mnp, Number = TestHelper.PhoneNumber}), Is.EqualTo("eplus"));
         }
     }
 }
