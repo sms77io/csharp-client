@@ -5,6 +5,8 @@ using Sms77.Api.Library.Pricing;
 
 namespace Sms77.Api.Resources {
     public class Pricing : Resource {
+        public const string Endpoint = "pricing";
+
         private async Task<T> Get<T>(string? country, PricingFormat? pricingFormat) {
             var args = new PricingParams {Country = country};
 
@@ -12,7 +14,7 @@ namespace Sms77.Api.Resources {
                 args.Format = (PricingFormat) pricingFormat;
             }
 
-            return await BaseClient.Fetch<T>(HttpMethod.Get, Endpoint.Pricing, args);
+            return await BaseClient.Fetch<T>(HttpMethod.Get, Endpoint, args);
         }
 
         public async Task<string> Csv(string? country) {

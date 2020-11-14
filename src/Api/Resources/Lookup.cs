@@ -5,8 +5,10 @@ using Sms77.Api.Library.Lookup;
 
 namespace Sms77.Api.Resources {
     public class Lookup : Resource {
+        public const string Endpoint = "lookup";
+
         private async Task<T> Request<T>(object args) {
-            return await BaseClient.Fetch<T>(HttpMethod.Post, Endpoint.Lookup, args);
+            return await BaseClient.Fetch<T>(HttpMethod.Post, Endpoint, args);
         }
 
         public async Task<CnamLookup> Cnam(string number) {

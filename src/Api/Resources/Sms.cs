@@ -5,9 +5,11 @@ using Sms77.Api.Library.Sms;
 
 namespace Sms77.Api.Resources {
     public class Sms : Resource {
+        public const string Endpoint = "sms";
+
         private async Task<T> Request<T>(SmsParams smsParams) {
             return await BaseClient.Fetch<T>(HttpMethod.Post,
-                Endpoint.Sms, smsParams, !(true != smsParams.Details && true != smsParams.Json));
+                Endpoint, smsParams, !(true != smsParams.Details && true != smsParams.Json));
         }
 
         public async Task<string> Text(SmsParams smsParams) {
