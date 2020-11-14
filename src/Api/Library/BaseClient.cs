@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json.Linq;
+using Sms77.Tests;
 
 namespace Sms77.Api.Library {
     public class BaseClient {
@@ -14,6 +15,14 @@ namespace Sms77.Api.Library {
         public string SentWith { get; }
         
         public BaseClient(string apiKey, string sentWith = "CSharp", bool debug = false) {
+            if (string.IsNullOrWhiteSpace(apiKey)) {
+                throw new AuthException("Empty API key given");
+            }
+            
+            if (string.IsNullOrWhiteSpace(sentWith)) {
+                throw new ApiException("Argument sentWith can not be empty");
+            }
+            
             ApiKey = apiKey;
             SentWith = sentWith;
             Debug = debug;

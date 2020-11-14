@@ -4,6 +4,8 @@ using Sms77.Api;
 namespace Sms77.Tests {
     [SetUpFixture]
     public class BaseTest {
+        internal const bool Debug = true;
+        internal const string SentWith = "CSharp-Test";
         internal static Client Client;
 
         [OneTimeSetUp]
@@ -14,7 +16,7 @@ namespace Sms77.Tests {
                             {TestHelper.ApiDummyKeyEnvProperty} or {TestHelper.ApiKeyEnvProperty}");
             }
 
-            Client = new Client(TestHelper.ApiKey, "CSharp-Test", true);
+            Client = new Client(TestHelper.ApiKey, SentWith, Debug);
         }
     }
 }
