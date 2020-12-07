@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json.Linq;
-using Sms77.Tests;
 
 namespace Sms77.Api.Library {
     public class BaseClient {
@@ -14,7 +13,13 @@ namespace Sms77.Api.Library {
         public bool Debug { get; }
         public string SentWith { get; }
         
-        public BaseClient(string apiKey, string sentWith = "CSharp", bool debug = false) {
+        public static readonly string ApiKeyEnvironmentKey= "SMS77_API_KEY";
+        
+        public BaseClient(string apiKey = "", string sentWith = "CSharp", bool debug = false) {
+            if ("" == apiKey) {
+                apiKey = Environment.GetEnvironmentVariable(ApiKeyEnvironmentKey) ?? string.Empty;
+            }
+            
             if (string.IsNullOrWhiteSpace(apiKey)) {
                 throw new AuthException("Empty API key given");
             }

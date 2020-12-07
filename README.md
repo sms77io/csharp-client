@@ -19,9 +19,9 @@ class Program
 {
     static async Task Main()
     {
-        var apiKey = Environment.GetEnvironmentVariable("SMS77_API_KEY");
-        var client = new Client(apiKey);
-        var balance = await client.Balance();
+        Environment.SetEnvironmentVariable(
+        Client.ApiKeyEnvironmentKey, "MySuperSecretApiKey!");
+        var balance = await new Client().Balance();
         Console.WriteLine($"Current account balance: {balance}");
     }
 }

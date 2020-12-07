@@ -4,7 +4,6 @@ using Sms77.Api.Library.Analytics;
 using Sms77.Api.Library.Contacts;
 using Sms77.Api.Library.Hooks;
 using Sms77.Api.Library.Journal;
-using JournalType = Sms77.Api.Library.Journal.Type;
 using Sms77.Api.Library.Lookup;
 using Sms77.Api.Library.Pricing;
 using Sms77.Api.Library.Sms;
@@ -13,10 +12,12 @@ using Sms77.Api.Library.ValidateForVoice;
 using Sms77.Api.Library.Voice;
 using Action = Sms77.Api.Library.Contacts.Action;
 using Analytics = Sms77.Api.Library.Analytics.Analytics;
+using JournalType = Sms77.Api.Library.Journal.Type;
 
 namespace Sms77.Api {
     public class Client : BaseClient {
-        public Client(string apiKey, string sentWith = "CSharp", bool debug = false) : base(apiKey, sentWith, debug) { }
+        public Client(string apiKey = "", string sentWith = "CSharp", bool debug = false)
+            : base(apiKey, sentWith, debug) { }
 
         public async Task<Analytics[]> Analytics(AnalyticsParams? args) {
             return await new Resources.Analytics(this).Get(args);

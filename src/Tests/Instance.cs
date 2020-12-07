@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Sms77.Api;
 using Sms77.Api.Library;
@@ -6,8 +7,10 @@ namespace Sms77.Tests {
     [TestFixture]
     public class Instance {
         [Test]
-        public void TestBalanceFails() {
-            Assert.Throws<AuthException>(() => new Client(""));
+        public void TestClientFails() {
+            Environment.SetEnvironmentVariable(BaseClient.ApiKeyEnvironmentKey, "");
+
+            Assert.Throws<AuthException>(() => new Client());
         }
         
         [Test]
