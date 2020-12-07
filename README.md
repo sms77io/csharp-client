@@ -26,5 +26,3 @@ class Program
     }
 }
 ```
-
-For further examples have a look at the [examples](./Examples).

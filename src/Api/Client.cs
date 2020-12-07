@@ -3,6 +3,8 @@ using Sms77.Api.Library;
 using Sms77.Api.Library.Analytics;
 using Sms77.Api.Library.Contacts;
 using Sms77.Api.Library.Hooks;
+using Sms77.Api.Library.Journal;
+using JournalType = Sms77.Api.Library.Journal.Type;
 using Sms77.Api.Library.Lookup;
 using Sms77.Api.Library.Pricing;
 using Sms77.Api.Library.Sms;
@@ -61,6 +63,17 @@ namespace Sms77.Api {
             };
         }
 
+        public async Task<dynamic> Journal(JournalParams args) {
+            var resource = new Resources.Journal(this);
+
+            return args.Type switch {
+                JournalType.Inbound => await resource.Get<JournalInbound>(args),
+                JournalType.Outbound => await resource.Get<JournalOutbound>(args),
+                JournalType.Voice => await resource.Get<JournalVoice>(args),
+                _ => await resource.Get<JournalReplies>(args)
+            };
+        }
+        
         public async Task<dynamic> Lookup(LookupParams args) {
             var resource = new Resources.Lookup(this);
 
